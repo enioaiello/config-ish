@@ -2,22 +2,40 @@
 	<img src="" alt="" height="128">
 </p>
 
-## À propos de
+## À propos de config-ish
 
+**config-ish** est un fichier shell servant a configurer iSH.
 
 ## Fonctionnalités
 
+Cette section est toujours en cours de rédaction.
 
 ## Installation
 
 ### Clonez le dépôt
 
 ````bash
-git clone https://github.com/enioaiello/[nom].git
+git clone https://github.com/enioaiello/config-ish.git
+````
+
+### Rendre le fichier exécutable
+
+````bash
+cd config-ish/src
+chmod +x ./setup.sh
+````
+
+### Lancer le script
+
+````bash
+./setup.sh
 ````
 
 ## Contribution
 
+Toute contribution est bienvenue ! Vous pouvez utiliser ces moyens pour contribuer :
+- Issues | Cliquez [ici](https://github.com/enioaiello/config-ish/issues)
+- Pull Request | Cliquez [ici](https://github.com/enioaiello/config-ish/pulls)
 
 ## Soutiens
 
