@@ -5,7 +5,7 @@ echo "[*] Mise à jour du système..."
 apk update && apk upgrade
 
 echo "[*] Installation des paquets essentiels..."
-apk add zsh nano neovim curl wget git openssh htop ncdu python3 py3-pip build-base neofetch httrack tmux nodejs npm tree
+apk add zsh nano neovim curl wget git openssh htop ncdu python3 py3-pip build-base neofetch tmux nodejs npm tree
 
 echo "[*] Installer code-server (VS Code dans le navigateur)..."
 npm install -g code-server
