@@ -31,6 +31,9 @@ chmod +x ./setup.sh
 ./setup.sh
 ````
 
+> [!NOTE]
+> Vous pouvez également télécharger le script manuellement et le copier depuis l'application "Fichiers"
+
 ## Contribution
 
 Toute contribution est bienvenue ! Vous pouvez utiliser ces moyens pour contribuer :
