@@ -62,7 +62,7 @@ SAVEHIST=5000
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 # Message d'accueil minimal
-echo "Bienvenue dans iSH (Zsh + agnoster). Tapez 'help' pour l'aide."
+echo "Tapez 'help' pour l'aide."
 
 # Alias
 alias ll='ls -la --color=auto'
@@ -73,7 +73,7 @@ alias v='nvim'
 
 # Aide
 help() {
-  echo "Commandes utiles :"
+  echo "[*] Commandes utiles :"
   echo "  ll       -> affiche tous les fichiers et répértoire"
   echo "  update   -> effectue une mise à jour du système"
   echo "  python   -> lance Python 3"
