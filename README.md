@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="src/images/capture.png" alt="" height="128">
+	<img src="src/images/capture.PNG" alt="Capture d'écran" height="128">
 </p>
 
 ## À propos de config-ish
