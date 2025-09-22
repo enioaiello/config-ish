@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="src/images/logo.png" alt="logo" height="128px">
+	<img src="src/images/logo.PNG" alt="logo" height="128px">
 </p>
 
 ## À propos de config-ish
