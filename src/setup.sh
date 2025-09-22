@@ -5,7 +5,7 @@ echo "[*] Mise à jour du système"
 apk update >/dev/null 2>&1 && apk upgrade >/dev/null 2>&1
 
 echo "[*] Installation des paquets essentiels"
-apk add zsh nano vim neovim curl wget git openssh htop ncdu python3 build-base neofetch tmux tree >/dev/null 2>&1
+apk add zsh nano vim neovim curl wget git openssh htop ncdu python3 build-base neofetch tmux tree nodejs py3-pip ffmpeg >/dev/null 2>&1
 
 echo "[*] Définition de zsh comme shell par défaut"
 # 1) Forcer l’exec zsh au démarrage iSH (fiable dans iSH)
