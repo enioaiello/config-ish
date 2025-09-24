@@ -1,6 +1,22 @@
 #!/bin/sh
 set -e
 
+echo "[*] Ajout de dépôts supplémentaires"
+ALPINE_VER="$(cut -d. -f1,2 /etc/alpine-release)"
+REPO_MAIN="http://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VER}/main"
+REPO_COMM="http://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VER}/community"
+REPO_EDGE="http://dl-cdn.alpinelinux.org/alpine/edge/testing"
+
+# Sauvegarde ancien fichier
+cp /etc/apk/repositories /etc/apk/repositories.bak
+
+# Écriture du nouveau fichier de dépôts
+cat > /etc/apk/repositories <<EOF
+$REPO_MAIN
+$REPO_COMM
+$REPO_EDGE
+EOF
+
 echo "[*] Mise à jour du système"
 apk update >/dev/null 2>&1 && apk upgrade >/dev/null 2>&1
 
