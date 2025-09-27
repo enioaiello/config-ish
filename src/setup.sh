@@ -95,6 +95,7 @@ help() {
   echo "  python   -> lance Python 3"
   echo "  v / vi   -> lance neovim"
   echo "  help     -> affiche le message d'aide"
+  echo "  serve    -> lance un serveur de développement Web"
 }
 ZSHRC
 
@@ -145,6 +146,28 @@ NVIM
 
 # Installer les plugins Neovim silencieusement
 nvim +PlugInstall +qall >/dev/null 2>&1 || true
+
+# Installer localtunnel globalement (via npm)
+echo "[*] Installation de localtunnel"
+npm install -g localtunnel >/dev/null 2>&1 || true
+
+# Alias ou fonction “serve”
+cat << 'EOF' >> ~/.zshrc
+
+# Lance un serveur HTTP local + tunnel vers Safari
+serve() {
+  # usage : serve [PORT]
+  PORT=${1:-8080}
+  # Lancer un serveur Python en arrière-plan
+  python3 -m http.server "$PORT" 
+  pid_http=$!
+  # Exposer via localtunnel
+  lt --port "$PORT"
+  # Après fermeture du tunnel, tuer le serveur Python
+  kill "$pid_http"
+}
+
+EOF
 
 echo "[*] Terminé."
 echo "➡ Afin que les changements soient pris en compte, redémarrez iSH."
