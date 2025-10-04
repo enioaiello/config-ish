@@ -1,6 +1,16 @@
 #!/bin/sh
 set -e
 
+# Efface le contenu du terminal
+clear
+
+# Affichage de l'en-tête
+echo "Configuration d'iSH"
+
+cols=$(stty size | awk '{print $2}')
+printf '=%.0s' $(seq 1 "$cols")
+echo
+
 echo "[*] Ajout de dépôts supplémentaires"
 ALPINE_VER="$(cut -d. -f1,2 /etc/alpine-release)"
 REPO_MAIN="http://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VER}/main"
@@ -17,28 +27,32 @@ $REPO_COMM
 $REPO_EDGE
 EOF
 
+# Met à jour le système
 echo "[*] Mise à jour du système"
 apk update >/dev/null 2>&1 && apk upgrade >/dev/null 2>&1
 
+# Installe les paquets essentiels
 echo "[*] Installation des paquets essentiels"
 apk add zsh nano vim neovim curl wget git openssh htop ncdu python3 build-base neofetch tmux tree nodejs py3-pip ffmpeg >/dev/null 2>&1
 
-echo "[*] Définition de zsh comme shell par défaut"
-# 1) Forcer l’exec zsh au démarrage iSH (fiable dans iSH)
+# Installe les instructions utiles
+apk add coreutils util-linux bash ncurses busybox-extras grep sed awk >/dev/null 2>&1
+
+echo "[*] Personnalisation du shell"
+# Force l’exécution de zsh au démarrage
 if ! grep -q "exec zsh" "$HOME/.profile" 2>/dev/null; then
   { echo 'if [ -t 1 ] && [ -z "$ZSH_VERSION" ]; then exec zsh -l; fi'; } >> "$HOME/.profile"
 fi
-# 2) Remplacer le shell dans /etc/passwd (au cas où iSH le respecte)
+# Remplace le shell dans /etc/passwd
 sed -i 's#/bin/ash#/bin/zsh#' /etc/passwd
 
-echo "[*] Suppression du message de bienvenue"
+# Supprime le message de bienvenue
 : > /etc/motd
 
-echo "[*] Installation de Oh My Zsh"
+# Installation de Oh My ZSH
 export RUNZSH=no CHSH=no
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" >/dev/null 2>&1
 
-echo "[*] Installation des plugins Oh My Zsh"
 # Plugins externes pour Oh My Zsh
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 mkdir -p "$ZSH_CUSTOM/plugins" >/dev/null 2>&1
@@ -47,7 +61,7 @@ mkdir -p "$ZSH_CUSTOM/plugins" >/dev/null 2>&1
 [ -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ] || \
   git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" >/dev/null 2>&1
 
-echo "[*] Configuration de Zsh"
+# Applique le thème de zsh
 cat > "$HOME/.zshrc" <<'ZSHRC'
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
@@ -89,7 +103,11 @@ alias v='nvim'
 
 # Aide
 help() {
-  echo "[*] Commandes utiles :"
+  echo "Aide"
+
+  cols=$(stty size | awk '{print $2}')
+  printf '=%.0s' $(seq 1 "$cols")
+  echo
   echo "  ll       -> affiche tous les fichiers et répértoire"
   echo "  update   -> effectue une mise à jour du système"
   echo "  python   -> lance Python 3"
@@ -99,17 +117,17 @@ help() {
 }
 ZSHRC
 
-echo "[*] Customosation de Neofetch"
+# Customise Neofetch
 mkdir -p "$HOME/.config/neofetch" >/dev/null 2>&1
 cat > "$HOME/.config/neofetch/config.conf" <<'NEO'
-# Utiliser la pomme et laisser l'affichage par défaut de neofetch
+# Utilise la pomme au lieu du logo d'Alpine
 ascii_distro="macos"
 image_backend="ascii"
 # Optionnel: limiter la largeur si besoin
 # ascii_max_width=32
 NEO
 
-echo "[*] Configuration de Neovim"
+# Configure neovim
 # Gestionnaire de plugins (vim-plug)
 curl -fsSL -o "$HOME/.local/share/nvim/site/autoload/plug.vim" --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >/dev/null 2>&1
