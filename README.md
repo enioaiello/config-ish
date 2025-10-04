@@ -12,6 +12,12 @@ Cette section est toujours en cours de rédaction.
 
 ## Installation
 
+### En une commande
+
+```
+apk add --no-cache wget && wget -qO- https://raw.githubusercontent.com/enioaiello/config-ish/main/src/setup.sh | sh
+```
+
 ### Clonez le dépôt
 
 ````bash
