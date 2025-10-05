@@ -33,10 +33,10 @@ apk update >/dev/null 2>&1 && apk upgrade >/dev/null 2>&1
 
 # Installe les paquets essentiels
 echo "[*] Installation des paquets essentiels"
-apk add zsh nano vim neovim curl wget git openssh htop ncdu python3 build-base neofetch tmux tree nodejs py3-pip ffmpeg >/dev/null 2>&1
+apk add --no-cache --quiet --no-progress --upgrade zsh nano vim neovim curl wget git openssh htop ncdu python3 build-base neofetch tmux tree nodejs py3-pip ffmpeg >/dev/null 2>&1
 
 # Installe les instructions utiles
-apk add coreutils util-linux bash ncurses busybox-extras grep sed awk >/dev/null 2>&1
+apk add --no-cache --quiet --no-progress --upgrade coreutils util-linux bash ncurses busybox-extras grep sed awk >/dev/null 2>&1
 
 echo "[*] Personnalisation du shell"
 # Force l’exécution de zsh au démarrage
