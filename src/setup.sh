@@ -108,6 +108,7 @@ help() {
   cols=$(stty size | awk '{print $2}')
   printf '=%.0s' $(seq 1 "$cols")
   echo
+  
   echo "  ll       -> affiche tous les fichiers et répértoire"
   echo "  update   -> effectue une mise à jour du système"
   echo "  python   -> lance Python 3"
@@ -166,7 +167,6 @@ NVIM
 nvim +PlugInstall +qall >/dev/null 2>&1 || true
 
 # Installer localtunnel globalement (via npm)
-echo "[*] Installation de localtunnel"
 npm install -g localtunnel >/dev/null 2>&1 || true
 
 # Alias ou fonction “serve”
@@ -185,7 +185,21 @@ serve() {
   kill "$pid_http"
 }
 
+# Met à jour le shell
+update() {
+    echo "[i] Mise à jour du shell avec la dernière version du script..."
+    TMPFILE=$(mktemp)
+    wget -qO "$TMPFILE" https://raw.githubusercontent.com/enioaiello/config-ish/main/src/setup.sh || {
+        echo "[!] Échec du téléchargement de la mise à jour."
+        rm -f "$TMPFILE"
+        return 1
+    }
+    chmod +x "$TMPFILE"
+    sh "$TMPFILE"
+    rm -f "$TMPFILE"
+    echo "[✓] Mise à jour terminée. Pour appliquer les changements, redémarrez iSH."
+}
+
 EOF
 
-echo "[*] Terminé."
-echo "➡ Afin que les changements soient pris en compte, redémarrez iSH."
+echo "[✓] Installation terminée. Pour appliquer les changements, redémarrez iSH."
