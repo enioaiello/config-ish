@@ -7,9 +7,16 @@ clear
 # Affichage de l'en-tête
 echo "Configuration d'iSH"
 
-cols=$(stty size | awk '{print $2}')
-printf '=%.0s' $(seq 1 "$cols")
-echo
+# Tente de récupérer le nombre de colonnes, sinon 60 par défaut
+if [ -t 1 ]; then
+    cols=$(stty size 2>/dev/null | awk '{print $2}')
+else
+    cols=60
+fi
+[ -z "$cols" ] && cols=60
+
+# Affiche une ligne de séparation
+printf '%*s\n' "$cols" '' | tr ' ' '='
 
 echo "[*] Ajout de dépôts supplémentaires"
 ALPINE_VER="$(cut -d. -f1,2 /etc/alpine-release)"
@@ -92,7 +99,7 @@ SAVEHIST=5000
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 # Message d'accueil minimal
-echo "Tapez 'help' pour l'aide."
+echo "Bienvenue, tapez 'help' pour l'aide."
 
 # Alias
 alias ll='ls -la --color=auto'
@@ -105,9 +112,14 @@ alias v='nvim'
 help() {
   echo "Aide"
 
-  cols=$(stty size | awk '{print $2}')
-  printf '=%.0s' $(seq 1 "$cols")
-  echo
+  if [ -t 1 ]; then
+    cols=$(stty size 2>/dev/null | awk '{print $2}')
+  else
+    cols=60
+  fi
+  [ -z "$cols" ] && cols=60
+
+  printf '%*s\n' "$cols" '' | tr ' ' '='
   
   echo "  ll       -> affiche tous les fichiers et répértoire"
   echo "  update   -> effectue une mise à jour du système"
